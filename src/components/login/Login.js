@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import './Login.css'
 
-const LoginForm = () => {
+const LoginForm = (props) => {
 
     // let [name, setName] = useState('')
     // let [email, setEmail] = useState('')
@@ -24,16 +24,18 @@ const LoginForm = () => {
     //     setnpass(e.target.value)
     // }
     let [value, setValue] = useState({
-        name: 'aviral',
+        name: '',
         email: '',
         pass: '',
         npass: '',
         state: 'Karnataka'
     })
 
-
+    let [err, seterr] = useState(false)
+    let [errtxt, seterrtxt] = useState('')
 
     let handleInputChange = (e) => {
+        
         // console.log(e.target.name)
         // setValue('asjdhjakls')
         setValue({
@@ -43,9 +45,30 @@ const LoginForm = () => {
 
     }
 
+    let handleSubmit = (e) => {
+        e.preventDefault();
+
+        if(!value.name || !value.email || !value.pass || !value.npass) {
+            seterr(true);
+            seterrtxt('Please enter all the fields')
+        } else if(value.name.length < 2){
+            seterr(true);
+            seterrtxt('Name is too short')
+        } else if(value.pass !== value.npass){
+            seterr(true)
+            seterrtxt('passwords do not match')
+        } else {
+            seterr(false)
+            localStorage.setItem('user',  JSON.stringify(value))
+            props.changeUserData(value);
+        }
+       
+    }
+
     return (
         <form>
             <div className='input_group'>
+                <h1>{props.name}</h1>
                 <label className="input_label red_star"><span className='label_text'>Name</span></label>
                 <input className='input' name="name" required onChange={handleInputChange} value={value.name}/>
             </div>
@@ -55,11 +78,11 @@ const LoginForm = () => {
             </div>
             <div className='input_group'>
                 <label className="input_label red_star"><span className='label_text'>Password</span></label>
-                <input className='input' name="pass" required onChange={handleInputChange} value={value.pass}/>
+                <input className='input' type="password" name="pass" required onChange={handleInputChange} value={value.pass}/>
             </div>
             <div className='input_group'>
                 <label className="input_label red_star"><span className='label_text'>Re enter your password</span></label>
-                <input className='input' name="npass" required onChange={handleInputChange} value={value.npass}/>
+                <input className='input' type="password" name="npass" required onChange={handleInputChange} value={value.npass}/>
             </div>
             <div className="input_group">
                 <label className="input_label"><span className="label_text">State</span></label>
@@ -71,13 +94,14 @@ const LoginForm = () => {
                     <option value="Karnataka">Karnataka</option>
                 </select>
             </div>
-            <button type="submit" value="Submit" className="button button_wide">Create your account</button>
+            {err ? <div className='err'>{errtxt}</div>: null}
+            <button type="submit" value="Submit" className="button button_wide" onClick={handleSubmit}>Create your account</button>
         </form>
     )
 
 }
 // controlled vs uncontrolled compoennt
-const Login = () => {
+const Login = (props) => {
     return(
         <div className="login-wrapper">
             <div className="login-form">
@@ -86,7 +110,7 @@ const Login = () => {
                 </div>
                 {/* FORM ELEMENT STARTS HERE */}
                 <div className="form-container">
-                    <LoginForm />
+                    <LoginForm changeUserData={props.changeUserData} />
                 </div>
             </div>
         </div>
