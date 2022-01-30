@@ -1,31 +1,31 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Product from '../Product/Product';
-import data from '../../constant'
+// import data from '../../constant'
 import './List.css';
 
-const List = () => {
+const List = (props) => {
 
-    // const [data, setData] = React.useState(null);
-
-    // const [num, setNum] = React.useState(0);
+    const [data, setData] = React.useState(null);
 
     React.useEffect(() => {
         // console.log('make the api call')
-        // fetch('http://demo7838675.mockable.io/products')
-        //     .then(res =>  res.json())
-        //     .then(result => {
-        //         setData(result.products)
-        //     })
+        fetch('http://demo9170788.mockable.io/products')
+            .then(res =>  res.json())
+            .then(result => {
+                setData(result.products)
+            })
       }, [])
 
     //   let handleClick = () => {
     //       //have to check which button is actually clicked 
     //   }
 
+
+
     return(
        <div className='each-item-wrapper'>
             {
-              data && data.products.map((eachItem, index) => {
+              data && data.map((eachItem, index) => {
                         return (
                         //     <div className="each-item">
                         //     <div className="img-wrapper">
@@ -45,7 +45,7 @@ const List = () => {
                         //         >Add to Cart</button>
                         //     </div>
                         // </div>
-                        <Product item={eachItem} key={index}/>
+                        <Product item={eachItem} key={index} />
                         )
                 })
             }
@@ -54,3 +54,6 @@ const List = () => {
 }
 
 export default List;
+
+
+// [items of cart], click action due to which this array changes

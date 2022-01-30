@@ -1,12 +1,13 @@
 import React from 'react';
+import { CartContext } from '../../context/cartContext';
 import './Product.css';
 
 
-
 const Product = (props) => {
+
+    let value = React.useContext(CartContext)
+    console.log(value)
     const { item } = props
-
-
 
     return (
         <div className="each-item">
@@ -23,11 +24,12 @@ const Product = (props) => {
                 </h5>
                 <button
                     className={`add-to-cart-btn`}
+                    onClick={() => value.addItemToCart(item)}
                 >Add to Cart</button>
             </div>
         </div>
     )
 }
 
-
+//usecallback
 export default Product
