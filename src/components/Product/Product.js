@@ -6,7 +6,6 @@ import './Product.css';
 const Product = (props) => {
 
     let value = React.useContext(CartContext)
-    console.log(value)
     const { item } = props
 
     return (

@@ -1,8 +1,10 @@
 import React, {useState} from 'react'
+import { useDispatch } from 'react-redux'
+import { setUserInfo } from '../../redux/user/userActions'
 import './Login.css'
 
-const LoginForm = (props) => {
-
+const LoginForm = () => {
+    const dispatch = useDispatch()
     // let [name, setName] = useState('')
     // let [email, setEmail] = useState('')
     // let [pass, setPass] = useState('')
@@ -60,15 +62,14 @@ const LoginForm = (props) => {
         } else {
             seterr(false)
             localStorage.setItem('user',  JSON.stringify(value))
-            props.changeUserData(value);
+            // props.changeUserData(value);
+            dispatch(setUserInfo(value))
         }
-       
     }
 
     return (
         <form>
             <div className='input_group'>
-                <h1>{props.name}</h1>
                 <label className="input_label red_star"><span className='label_text'>Name</span></label>
                 <input className='input' name="name" required onChange={handleInputChange} value={value.name}/>
             </div>
@@ -101,7 +102,7 @@ const LoginForm = (props) => {
 
 }
 // controlled vs uncontrolled compoennt
-const Login = (props) => {
+const Login = () => {
     return(
         <div className="login-wrapper">
             <div className="login-form">
@@ -110,7 +111,7 @@ const Login = (props) => {
                 </div>
                 {/* FORM ELEMENT STARTS HERE */}
                 <div className="form-container">
-                    <LoginForm changeUserData={props.changeUserData} />
+                    <LoginForm />
                 </div>
             </div>
         </div>

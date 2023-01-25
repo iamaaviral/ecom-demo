@@ -7,24 +7,31 @@ import { ThemeContext } from './context/themeContext'
 
 import logo from './images/myntra-logo.png'
 import './App.css';
+import { useDispatch, useSelector } from 'react-redux'
+import { setUserInfo } from './redux/user/userActions'
+
 
 
 function App() {
-
   const value = React.useContext(ThemeContext)
-  const [userData, setUserData] = React.useState(localStorage.getItem('user') || null)
+  const userData = useSelector((state) => state.userData)
+  const dispatch = useDispatch()
+
+  // const [userData, setUserData] = React.useState(localStorage.getItem('user') || null)
 
   //here also i can make the api call
   // const [name, setName] =  React.useState('aviral')
 
-  function changeUserData(data) {
-    setUserData(data) 
-    // console.log(data)
-  }
+  // function changeUserData(data) {
+  //   setUserData(data) 
+  //   // console.log(data)
+  // }
 
   function handleLogout() {
     localStorage.removeItem('user');
-    setUserData(null)
+    // setUserData(null)
+    dispatch(setUserInfo(null))
+
   }
 
   return (
@@ -38,12 +45,12 @@ function App() {
             <input type="checkbox" onChange={value.toggleTheme}/>
             <span className="slider round"></span>
           </label>
-          <button href="" className="logout-linkButton" onClick={handleLogout}>Logout</button>
+          <button href="" className="logout-linkButton" onClick={handleLogout}>{`Logout ${userData.name}`}</button>
         </div>
       </header>
         <div className="body-container">
         <List/>
-        </div></>: <Login changeUserData={changeUserData} /> }
+        </div></>: <Login /> }
     </div>
   );
 }

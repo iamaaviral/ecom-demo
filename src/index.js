@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux'
+import store from './redux/store'
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -8,11 +10,13 @@ import { ThemeProvider } from './context/themeContext';
 
 ReactDOM.render(
   <React.StrictMode>
+    <Provider store={store}>
     <ThemeProvider>
       <CartProvider>
         <App />
       </CartProvider>
     </ThemeProvider>
+    </Provider>
 
   </React.StrictMode>,
   document.getElementById('root')
