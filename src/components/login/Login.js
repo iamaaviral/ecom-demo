@@ -62,7 +62,6 @@ const LoginForm = () => {
         } else {
             seterr(false)
             localStorage.setItem('user',  JSON.stringify(value))
-            // props.changeUserData(value);
             dispatch(setUserInfo(value))
         }
     }

@@ -14,7 +14,7 @@ import { setUserInfo } from './redux/user/userActions'
 
 function App() {
   const value = React.useContext(ThemeContext)
-  const userData = useSelector((state) => state.userData)
+  const userData = useSelector((state) => state.user.userData)
   const dispatch = useDispatch()
 
   // const [userData, setUserData] = React.useState(localStorage.getItem('user') || null)
@@ -31,7 +31,6 @@ function App() {
     localStorage.removeItem('user');
     // setUserData(null)
     dispatch(setUserInfo(null))
-
   }
 
   return (
