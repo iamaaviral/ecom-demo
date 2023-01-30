@@ -1,7 +1,7 @@
 import { LOGIN_USER } from "./userTypes"
 
 const initialState = {
-    userData: JSON.parse(localStorage.getItem('user')) || null
+    userData: JSON.stringify(localStorage.getItem('user')) || null
 }
 
 const userReducer = (state = initialState, action) => {

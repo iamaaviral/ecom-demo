@@ -1,50 +1,30 @@
 import React, { useContext } from 'react';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { fetchProductsAPI } from '../../redux/product/productActions';
 import Product from '../Product/Product';
 // import data from '../../constant'
 import './List.css';
 
-const List = (props) => {
+//connect......
 
-    const [data, setData] = React.useState(null);
+const List = (props) => {
+  console.log(props)
+    // const  data = useSelector((state) => state.product.products)
+    // const loading = useSelector((state) => state.product.loading)
+    // const dispatch =  useDispatch()
 
     React.useEffect(() => {
-        // console.log('make the api call')
-        fetch('http://demo9170788.mockable.io/products')
-            .then(res =>  res.json())
-            .then(result => {
-                setData(result.products)
-            })
+        // dispatch(fetchProductsAPI())
+        console.log(props)
+        props.getProducts()
       }, [])
-
-    //   let handleClick = () => {
-    //       //have to check which button is actually clicked 
-    //   }
-
 
 
     return(
        <div className='each-item-wrapper'>
             {
-              data && data.map((eachItem, index) => {
+              props.products && props.products.map((eachItem, index) => {
                         return (
-                        //     <div className="each-item">
-                        //     <div className="img-wrapper">
-                        //         <img src={eachItem.searchImage} alt="product-img" />
-                        //     </div>
-                        //     <div className="content-wrapper">
-                        //         <h3 className="brand-name">{eachItem.brand}</h3>
-                        //         <h4 className="brand-desc"> {eachItem.additionalInfo}</h4>
-                        //         <h5>
-                        //             <span className="b-d-price">Rs. {eachItem.price}</span>
-                        //             {eachItem.discountDisplayLabel ? <span className="b-price">Rs. {eachItem.mrp}</span> : null}
-                        //             <span className="b-discount">{eachItem.discountDisplayLabel}</span>
-                        //         </h5>
-                        //         <button
-                        //             className={`add-to-cart-btn`}
-                        //             onClick={handleClick}
-                        //         >Add to Cart</button>
-                        //     </div>
-                        // </div>
                         <Product item={eachItem} key={index} />
                         )
                 })
@@ -53,7 +33,21 @@ const List = (props) => {
     )
 }
 
-export default List;
+const mapStateToProps  = state => {
+  return {
+    products: state.product.products,
+    loading: state.product.loading,
+    error: state. product.error
+  }
+}
 
 
+
+const mapDispatchToProps  = dispatch => {
+  return {
+    getProducts: () => dispatch(fetchProductsAPI())
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(List);
 // [items of cart], click action due to which this array changes
